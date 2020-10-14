@@ -11,4 +11,6 @@ public interface VaccineRoadService {
     VaccineRoad findById(Long id);
 
     Page<VaccineRoad> getAll(Pageable pageable);
+
+    Long createVaccineRoad (Long patientId,Long vaccineId,String startTime);
 }

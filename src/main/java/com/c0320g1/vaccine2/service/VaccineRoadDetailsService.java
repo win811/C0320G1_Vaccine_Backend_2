@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface VaccineRoadDetailsService {
 
-    void save(VaccineRoadDetails vaccineRoadDetails);
+    VaccineRoadDetails save(VaccineRoadDetails vaccineRoadDetails);
 
     VaccineRoadDetails findById(Long id);
 

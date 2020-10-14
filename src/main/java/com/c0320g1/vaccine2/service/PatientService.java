@@ -9,4 +9,5 @@ public interface PatientService {
    List<Patient> findAll();
    Patient findById(Long id);
    void save(Patient patient);
+   List<Patient> findByParentIdCard(String idCard);
 }

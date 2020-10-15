@@ -20,6 +20,8 @@ public class BookHistory {
 
     private LocalDate birthDay;
 
+    private String gender;
+
     private String parentName;
 
     private String parentIdCard;
@@ -27,6 +29,8 @@ public class BookHistory {
     private String address;
 
     private String phoneNumber;
+
+    private String email;
 
     @ManyToOne
     @JoinColumn(name = "vaccine_id")

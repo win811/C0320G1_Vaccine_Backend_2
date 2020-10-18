@@ -1,9 +1,12 @@
 package com.c0320g1.vaccine2.controller;
 
 
+import com.c0320g1.vaccine2.model.BookHistory;
 import com.c0320g1.vaccine2.model.Patient;
 import com.c0320g1.vaccine2.model.VerifyToken;
+import com.c0320g1.vaccine2.service.BookHistoryService;
 import com.c0320g1.vaccine2.service.EmailService;
+import com.c0320g1.vaccine2.service.VaccineService;
 import com.c0320g1.vaccine2.service.VerifyTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +30,10 @@ public class BookHistoryController {
     private VerifyTokenService verifyTokenService;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private VaccineService vaccineService;
+    @Autowired
+    private BookHistoryService bookHistoryService;
 
     //    CREATE BY ANH ĐỨC
     @PostMapping("bookHistory/verify")
@@ -50,10 +57,11 @@ public class BookHistoryController {
 
     //    CREATE BY ANH ĐỨC
     @PostMapping("bookHistory/verifyCode")
-    public ResponseEntity<Map<String, Object>> verifyCode(@RequestBody Patient patient) {
+    public ResponseEntity<Map<String, Object>> verifyCode(@RequestParam String email,
+                                                          @RequestParam String code) {
         Map<String, Object> response = new HashMap<>();
         try {
-            if (!verifyTokenService.checkTokenVerify(patient.getEmail(), patient.getCode())) {
+            if (!verifyTokenService.checkTokenVerify(email, code)) {
                 response.put("status", HttpStatus.NOT_FOUND);
                 response.put("message", "Mã xác minh không chính xác hoặc đã hết hạn, vui lòng lấy mã xác minh mới");
                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
@@ -64,35 +72,25 @@ public class BookHistoryController {
             response.put("message", "Mã xác minh không chính xác hoặc đã hết hạn, vui lòng lấy mã xác minh mới");
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
-        verifyTokenService.deleteAllByEmail(patient.getEmail());
+        verifyTokenService.deleteAllByEmail(email);
         response.put("status", HttpStatus.OK);
         response.put("message", "Xác minh thành công ");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    //    CREATE BY ANH ĐỨC
-    @PostMapping("injection/registration")
-    public ResponseEntity<Map<String, Object>> registration(@RequestBody InjectionHistory injectionHistory) {
+    @PostMapping("bookHistory/registration")
+    public ResponseEntity<Map<String, Object>> registration(@RequestBody BookHistory bookHistory) {
         Map<String, Object> response = new HashMap<>();
-        if (vaccineService.findById(injectionHistory.getVaccine().getId()) == null) {
+        if (vaccineService.findById(bookHistory.getVaccine().getId()) == null) {
             response.put("status", HttpStatus.NOT_FOUND);
             response.put("message", "Vắc xin này không tồn tại ");
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
-        try {
-            injectionHistory.setPatient(patientService.checkPatient(injectionHistory.getPatient()));
-        } catch (Exception ex
-        ) {
-            System.out.println(ex);
-        }
-//        Kiểm tra xem bệnh nhân đã tồn tại hay chưa, nếu chưa sẽ tạo mới bệnh nhân vào database rồi trả về
-        injectionHistory.setRegisterType("yêu cầu");
-        injectionHistory.setIsInjected("chưa tiêm");
-        injectionHistory.setReponseContent("chưa xác định");
-        this.injectionHistoryService.save(injectionHistory);
-        String email = injectionHistory.getPatient().getEmail();
-        String text = "Bạn đã đăng ký tiêm chủng theo yêu cầu vào ngày " + injectionHistory.getInjectionDate().getDayOfMonth() + " tháng " +
-                injectionHistory.getInjectionDate().getMonthValue() + " tại trung tâm tiêm chủng vắc xin C0320G1-Center - địa chỉ : " +
+
+        this.bookHistoryService.save(bookHistory);
+        String email = bookHistory.getEmail();
+        String text = "Bạn đã đăng ký tiêm chủng theo yêu cầu vào ngày " + bookHistory.getInjectionDate().getDayOfMonth() + " tháng " +
+                bookHistory.getInjectionDate().getMonthValue() + " tại trung tâm tiêm chủng vắc xin C0320G1-Center - địa chỉ : " +
                 "34 Cao Xuân Huy, Khuê trung, Cẩm Lệ, Đà nẵng. Khi đi vui lòng mang theo chứng minh thư, Xin cảm ơn!";
         try {
             this.emailService.sendSimpleHTMLMessage(email, "Đăng ký tiêm thành công", text);

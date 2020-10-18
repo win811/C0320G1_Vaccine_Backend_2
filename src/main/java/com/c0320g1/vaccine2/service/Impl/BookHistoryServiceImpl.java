@@ -4,9 +4,11 @@ import com.c0320g1.vaccine2.model.BookHistory;
 import com.c0320g1.vaccine2.repository.BookHistoryRepository;
 import com.c0320g1.vaccine2.service.BookHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class BookHistoryServiceImpl implements BookHistoryService {
     @Autowired
     BookHistoryRepository bookHistoryRepository;

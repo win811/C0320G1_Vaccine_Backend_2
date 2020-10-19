@@ -1,5 +1,7 @@
 package com.c0320g1.vaccine2.dto;
 
+import com.c0320g1.vaccine2.model.VaccineRoad;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -12,7 +14,7 @@ public class PatientListDTO {
 
     private String parentIdCard;
 
-    private List<String> vaccineRoadList;
+    private List<VaccineRoad> vaccineRoadList;
 
     public PatientListDTO() {
     }
@@ -49,11 +51,11 @@ public class PatientListDTO {
         this.parentIdCard = parentIdCard;
     }
 
-    public List<String> getVaccineRoadList() {
+    public List<VaccineRoad> getVaccineRoadList() {
         return vaccineRoadList;
     }
 
-    public void setVaccineRoadList(List<String> vaccineRoadList) {
+    public void setVaccineRoadList(List<VaccineRoad> vaccineRoadList) {
         this.vaccineRoadList = vaccineRoadList;
     }
 }

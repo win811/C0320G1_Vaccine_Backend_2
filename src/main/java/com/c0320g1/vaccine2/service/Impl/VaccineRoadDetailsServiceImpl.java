@@ -14,8 +14,8 @@ public class VaccineRoadDetailsServiceImpl implements VaccineRoadDetailsService 
     VaccineRoadDetailsRepository vaccineRoadDetailsRepository;
 
     @Override
-    public void save(VaccineRoadDetails vaccineRoadDetails) {
-        vaccineRoadDetailsRepository.save(vaccineRoadDetails);
+    public VaccineRoadDetails save(VaccineRoadDetails vaccineRoadDetails) {
+      return vaccineRoadDetailsRepository.save(vaccineRoadDetails);
     }
 
     @Override

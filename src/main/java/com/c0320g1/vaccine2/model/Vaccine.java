@@ -31,6 +31,7 @@ public class Vaccine {
     private Double price;
     private Integer injectionTimes;
     private Integer rangeTime;
+    private String image;
 
     @OneToMany(mappedBy = "vaccine")
     @JsonIgnoreProperties({"vaccine","patient"})

@@ -72,6 +72,7 @@ public class PatientServiceImpl implements PatientService {
     // Thành Long
     private PatientListDTO transferToDTO(Patient temp) {
         PatientListDTO patient = new PatientListDTO();
+        patient.setId(temp.getId());
         patient.setFullName(temp.getFullName());
         patient.setBirthDay(temp.getBirthDay());
         patient.setParentName(temp.getParentName());

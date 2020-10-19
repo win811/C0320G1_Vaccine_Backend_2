@@ -6,6 +6,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class PatientListDTO {
+
+    private Long id;
+
     private String fullName;
 
     private LocalDate birthDay;
@@ -17,6 +20,14 @@ public class PatientListDTO {
     private List<VaccineRoad> vaccineRoadList;
 
     public PatientListDTO() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFullName() {

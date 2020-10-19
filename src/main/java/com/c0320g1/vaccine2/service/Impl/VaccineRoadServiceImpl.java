@@ -27,11 +27,18 @@ public class VaccineRoadServiceImpl implements VaccineRoadService {
     @Autowired
     VaccineService vaccineService;
 
+    @Autowired
+    PatientService patientService;
+
     @Override
-    public Long createVaccineRoad(Long patientId, Long vaccineId, String startTime) {
-        Patient patient = new Patient();
-        patient.setId(patientId);
+    public Boolean createVaccineRoad(Long patientId, Long vaccineId, String startTime) {
+
+
+        Patient patient = this.patientService.findById(patientId);
         Vaccine vaccine = this.vaccineService.findById(vaccineId);
+        if (patient == null || vaccine == null) {
+            return Boolean.FALSE;
+        }
         VaccineRoad vaccineRoad = new VaccineRoad();
         vaccineRoad.setPatient(patient);
         vaccineRoad.setVaccine(vaccine);
@@ -59,7 +66,7 @@ public class VaccineRoadServiceImpl implements VaccineRoadService {
             vaccineRoadDetailsRepository.save(tempRoadDetails);
             currentTime = tempTime;
         }
-        return vaccineRoad.getId();
+        return Boolean.TRUE;
     }
 
     @Override

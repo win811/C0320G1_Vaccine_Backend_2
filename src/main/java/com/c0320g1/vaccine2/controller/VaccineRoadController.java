@@ -33,7 +33,8 @@ public class VaccineRoadController {
     public ResponseEntity<Void> createVaccineRoad (@RequestParam Long patientId,
                                                    @RequestParam Long vaccineId,
                                                    @RequestParam String startTime) {
-        this.vaccineRoadService.createVaccineRoad(patientId,vaccineId,startTime);
+        if (this.vaccineRoadService.createVaccineRoad(patientId,vaccineId,startTime))
         return ResponseEntity.ok().build();
+        return ResponseEntity.badRequest().build();
     }
 }

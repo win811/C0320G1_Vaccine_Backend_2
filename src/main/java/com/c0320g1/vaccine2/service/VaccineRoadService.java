@@ -12,5 +12,5 @@ public interface VaccineRoadService {
 
     Page<VaccineRoad> getAll(Pageable pageable);
 
-    Long createVaccineRoad (Long patientId,Long vaccineId,String startTime);
+    Boolean createVaccineRoad (Long patientId,Long vaccineId,String startTime);
 }

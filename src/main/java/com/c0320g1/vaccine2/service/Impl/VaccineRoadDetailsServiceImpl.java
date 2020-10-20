@@ -8,10 +8,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class VaccineRoadDetailsServiceImpl implements VaccineRoadDetailsService {
     @Autowired
     VaccineRoadDetailsRepository vaccineRoadDetailsRepository;
+
+    @Override
+    public List<VaccineRoadDetails> findAll() {
+        return vaccineRoadDetailsRepository.findAll();
+    }
 
     @Override
     public VaccineRoadDetails save(VaccineRoadDetails vaccineRoadDetails) {
